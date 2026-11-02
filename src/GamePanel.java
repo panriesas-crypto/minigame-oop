@@ -48,6 +48,13 @@ public class GamePanel extends JPanel {
 
         bindKey("pressed R", "restart",
                 () -> manager.restart());
+
+        bindKey("pressed ENTER", "startGame",
+                () -> manager.startGame());
+
+        bindKey("pressed ESCAPE", "pauseGame",
+                () -> manager.togglePause());
+
     }
 
     private void bindKey(
@@ -155,6 +162,44 @@ public class GamePanel extends JPanel {
                     320);
 
             g.drawString("Press R to Restart", 220, 350);
+        }
+
+        // หน้าจอ Start Menu
+        if (!manager.isGameStarted()) {
+
+            g.setColor(new Color(0, 0, 0, 210));
+            g.fillRect(0, 0, 600, 540);
+
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.drawString("APPLE HUNTER", 165, 170);
+
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.drawString("SNAKE TOWER", 190, 205);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 17));
+            g.drawString("A / D  -  Move", 230, 270);
+            g.drawString("W / S  -  Climb", 230, 300);
+            g.drawString("SPACE  -  Jump", 230, 330);
+
+            g.setColor(Color.YELLOW);
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            g.drawString("Press ENTER to Start", 185, 405);
+        }
+
+        // หน้าจอ Pause
+        if (manager.isPaused()) {
+
+            g.setColor(new Color(0, 0, 0, 180));
+            g.fillRect(0, 0, 600, 540);
+
+            g.setColor(Color.YELLOW);
+            g.setFont(new Font("Arial", Font.BOLD, 42));
+            g.drawString("PAUSED", 205, 245);
+
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.PLAIN, 18));
+            g.drawString("Press ESC to Continue", 205, 285);
         }
 
         g.dispose();

@@ -8,6 +8,9 @@ public class GameManager {
     private final List<Floor> floors = new ArrayList<>();
     private final List<Ladder> ladders = new ArrayList<>();
 
+    private boolean gameStarted = false;
+    private boolean paused = false;
+
     private int score = 0;
     private int cameraY = 0;
 
@@ -35,6 +38,7 @@ public class GameManager {
 
     public GameManager() {
         restart();
+        gameStarted = false;
         climbingStartFloor = -1;
     }
 
@@ -53,6 +57,8 @@ public class GameManager {
         upPressed = false;
         downPressed = false;
         jumpRequested = false;
+        gameStarted = true;
+        paused = false;
 
         lavaY = 540;
         highestFloor = 1;
@@ -60,6 +66,34 @@ public class GameManager {
         // เริ่มต้นด้วย 4 ชั้น
         for (int n = 1; n <= 4; n++) {
             addFloor(n);
+        }
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void startGame() {
+        if (!gameStarted) {
+            gameStarted = true;
+            paused = false;
+        }
+    }
+
+    public void togglePause() {
+        if (gameStarted && !isGameOver()) {
+            paused = !paused;
+
+            // ล้างสถานะปุ่มเพื่อป้องกันเดินค้าง
+            leftPressed = false;
+            rightPressed = false;
+            upPressed = false;
+            downPressed = false;
+            jumpRequested = false;
         }
     }
 
@@ -145,7 +179,9 @@ public class GameManager {
     }
 
     public void requestJump() {
-        jumpRequested = true;
+        if (gameStarted && !paused && !isGameOver()) {
+            jumpRequested = true;
+        }
     }
 
     private int getFloorY(int number) {
@@ -162,7 +198,7 @@ public class GameManager {
 
     public void update() {
 
-        if (isGameOver()) {
+        if (!gameStarted || paused || isGameOver()) {
             return;
         }
 
