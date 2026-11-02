@@ -20,6 +20,19 @@ public class GameManager {
     private int climbingTargetFloor = -1;
     private int climbingStartFloor = -1;
 
+    private static final int FLOOR_SPACING = 180;
+
+    private int lavaY = 540;
+    private int highestFloor = 1;
+
+    public int getLavaY() {
+        return lavaY;
+    }
+
+    public int getHighestFloor() {
+        return highestFloor;
+    }
+
     public GameManager() {
         restart();
         climbingStartFloor = -1;
@@ -41,14 +54,36 @@ public class GameManager {
         downPressed = false;
         jumpRequested = false;
 
+        lavaY = 540;
+        highestFloor = 1;
+
         // เริ่มต้นด้วย 4 ชั้น
         for (int n = 1; n <= 4; n++) {
             addFloor(n);
         }
     }
 
+    private void updateLava() {
+
+        int currentFloor = player.getCurrentFloor();
+
+        if (currentFloor > highestFloor) {
+            highestFloor = currentFloor;
+        }
+
+        int targetLavaY = getFloorY(highestFloor) + FLOOR_SPACING - 30;
+
+        if (lavaY > targetLavaY) {
+            lavaY = Math.max(targetLavaY, lavaY - 5);
+        }
+
+        if (player.getY() + player.getHeight() > lavaY) {
+            player.takeLavaDamage();
+        }
+    }
+
     private void addFloor(int number) {
-        int floorY = 490 - (number - 1) * 120;
+        int floorY = 490 - (number - 1) * FLOOR_SPACING;
 
         floors.add(new Floor(number, floorY));
 
@@ -58,7 +93,7 @@ public class GameManager {
             ladders.add(new Ladder(
                     lowerFloor % 2 == 1 ? 480 : 90,
                     floorY,
-                    120));
+                    FLOOR_SPACING));
         }
     }
 
@@ -119,11 +154,10 @@ public class GameManager {
 
     private void updateCamera() {
 
-        // ต้องการให้ Player อยู่บริเวณ y = 240 ของหน้าจอ
         int targetCameraY = Math.max(0, 240 - player.getY());
 
-        // กล้องเลื่อนขึ้นตาม Player และไม่เลื่อนกลับลง
         cameraY = Math.max(cameraY, targetCameraY);
+        updateLava();
     }
 
     public void update() {
@@ -219,7 +253,9 @@ public class GameManager {
         }
 
         // เริ่มปีนลง
-        if (downPressed && currentFloor > 1) {
+        if (downPressed
+                && currentFloor > 1
+                && currentFloor > highestFloor) {
             Ladder ladder = ladders.get(currentFloor - 2);
 
             if (ladder.isPlayerNear(player)) {
@@ -246,7 +282,10 @@ public class GameManager {
 
         // กด S เพื่อปีนลง
         else if (downPressed && !upPressed) {
-            player.climb(1);
+
+            if (climbingStartFloor >= highestFloor) {
+                player.climb(1);
+            }
         }
 
         // ถึงชั้นบน

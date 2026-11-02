@@ -102,9 +102,20 @@ public class GamePanel extends JPanel {
 
         manager.getPlayer().draw(world);
 
+        int lavaY = manager.getLavaY();
+
+        world.setColor(new Color(235, 75, 30));
+        world.fillRect(
+                0,
+                lavaY,
+                600,
+                100000);
+
+        world.setColor(new Color(255, 180, 50));
+        world.fillRect(0, lavaY, 600, 7);
+
         world.dispose();
 
-        // HUD ไม่เลื่อนตามกล้อง
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));
 

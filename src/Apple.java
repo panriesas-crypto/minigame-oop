@@ -25,8 +25,7 @@ public class Apple extends GameObject {
         if (!collected) {
             collected = true;
 
-            // ประมาณ 5 วินาที ที่ 60 FPS
-            respawnFrames = 300;
+            respawnFrames = 3600;
         }
     }
 

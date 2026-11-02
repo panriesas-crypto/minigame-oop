@@ -55,6 +55,10 @@ public class Player extends GameObject {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
+    public void takeLavaDamage() {
+        hp = 0;
+    }
+
     public void takeDamage(int damage) {
         if (invincibleFrames > 0 || !isAlive()) {
             return;
