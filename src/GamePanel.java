@@ -45,6 +45,10 @@ public class GamePanel extends JPanel {
 
         bindKey("pressed SPACE", "jump",
                 () -> manager.requestJump());
+
+        bindKey("pressed R", "restart",
+                () -> manager.restart());
+
     }
 
     private void bindKey(
@@ -96,7 +100,7 @@ public class GamePanel extends JPanel {
 
         g.drawString(
                 "HP: " + manager.getPlayer().getHp()
-                        + "     Score: 0",
+                        + "     Score: " + manager.getScore(),
                 420,
                 22);
 
@@ -114,10 +118,23 @@ public class GamePanel extends JPanel {
             g.setFont(new Font("Arial", Font.PLAIN, 18));
 
             g.drawString("HP: 0", 270, 290);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 16));
+
+            g.drawString(
+                    "Score: " + manager.getScore(),
+                    255,
+                    320);
+
+            g.drawString(
+                    "Press R to Restart",
+                    220,
+                    350);
+
         }
 
         g.drawString(
-                "A/D: Move   W/S: Climb   SPACE: Jump",
+                "A/D: Move   W/S: Climb   SPACE: Jump   R: Restart",
                 12,
                 525);
 
