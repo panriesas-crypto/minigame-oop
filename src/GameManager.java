@@ -131,6 +131,12 @@ public class GameManager {
         }
     }
 
+    public void returnToMenu() {
+        restart();
+        gameStarted = false;
+        paused = false;
+    }
+
     private void generateMoreFloors() {
         // เตรียมชั้นใหม่ไว้เหนือผู้เล่นเสมอ
         while (floors.size() < player.getCurrentFloor() + 4) {
