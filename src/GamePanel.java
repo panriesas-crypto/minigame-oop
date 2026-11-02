@@ -6,6 +6,7 @@ import javax.swing.*;
 public class GamePanel extends JPanel {
 
     private final GameManager manager = new GameManager();
+    private final GameLoop gameLoop = new GameLoop(manager, this);
 
     public GamePanel() {
         setPreferredSize(new Dimension(600, 540));
@@ -13,13 +14,18 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         setupControls();
+    }
 
-        Timer gameTimer = new Timer(16, e -> {
-            manager.update();
-            repaint();
-        });
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        gameLoop.start();
+    }
 
-        gameTimer.start();
+    @Override
+    public void removeNotify() {
+        gameLoop.stop();
+        super.removeNotify();
     }
 
     private void setupControls() {

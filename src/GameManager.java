@@ -232,8 +232,15 @@ public class GameManager {
         updateCamera();
 
         for (Floor floor : floors) {
-            floor.getSnake().update();
-            floor.getApple().update();
+
+            Updatable[] objects = {
+                    floor.getSnake(),
+                    floor.getApple()
+            };
+
+            for (Updatable object : objects) {
+                object.update();
+            }
         }
 
         checkSnakeCollisions();

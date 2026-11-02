@@ -1,7 +1,7 @@
 
 import java.awt.*;
 
-public class Snake extends GameObject {
+public class Snake extends GameObject implements Updatable {
 
     private final int floorNumber;
     private final double speed;
@@ -34,16 +34,15 @@ public class Snake extends GameObject {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
+    @Override
     public void update() {
         positionX += speed * direction;
 
-        // ชนขอบซ้าย
         if (positionX < 0) {
             positionX = 0;
             direction = 1;
         }
 
-        // ชนขอบขวา
         if (positionX > 600 - WIDTH) {
             positionX = 600 - WIDTH;
             direction = -1;
@@ -58,13 +57,12 @@ public class Snake extends GameObject {
 
         for (int i = 0; i < 5; i++) {
             g.fillRoundRect(
-                x + i * 17,
-                y,
-                18,
-                HEIGHT,
-                7,
-                7
-            );
+                    x + i * 17,
+                    y,
+                    18,
+                    HEIGHT,
+                    7,
+                    7);
         }
 
         // วาดตาไว้ด้านที่งูกำลังเดิน

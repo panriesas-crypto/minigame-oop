@@ -1,7 +1,7 @@
 
 import java.awt.*;
 
-public class Apple extends GameObject {
+public class Apple extends GameObject implements Updatable {
 
     private boolean collected = false;
     private int respawnFrames = 0;
@@ -29,6 +29,7 @@ public class Apple extends GameObject {
         }
     }
 
+    @Override
     public void update() {
         if (collected) {
             respawnFrames--;
