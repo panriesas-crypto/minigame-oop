@@ -1,5 +1,7 @@
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class Apple extends GameObject implements Updatable {
 
