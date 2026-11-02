@@ -110,10 +110,13 @@ public class Player extends GameObject {
         }
     }
 
-    public void startClimbing() {
+    public void startClimbing(int ladderX) {
         climbing = true;
         onGround = false;
         velocityY = 0;
+
+        // จัดผู้เล่นให้อยู่ตรงกลางบันได
+        x = ladderX + 14 - WIDTH / 2;
     }
 
     public void climb(int direction) {

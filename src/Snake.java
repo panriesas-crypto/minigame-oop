@@ -19,7 +19,7 @@ public class Snake extends GameObject {
         this.floorNumber = floorNumber;
 
         // ชั้นสูง งูจะเคลื่อนที่เร็วขึ้น
-        this.speed = 1.0 + (floorNumber - 1) * 0.5;
+        this.speed = Math.min(6.0, 1.0 + (floorNumber - 1) * 0.5);
     }
 
     public int getFloorNumber() {

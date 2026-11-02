@@ -48,7 +48,6 @@ public class GamePanel extends JPanel {
 
         bindKey("pressed R", "restart",
                 () -> manager.restart());
-
     }
 
     private void bindKey(
@@ -76,33 +75,51 @@ public class GamePanel extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // วาดโลกของเกมโดยเลื่อนตามกล้อง
+        Graphics2D world = (Graphics2D) g.create();
+        world.translate(0, manager.getCameraY());
+
         for (Floor floor : manager.getFloors()) {
-            g.setColor(new Color(168, 124, 77));
-            g.fillRect(0, floor.getY(), 600, 9);
 
             g.setColor(Color.WHITE);
-            g.drawString(
+
+            world.setColor(new Color(168, 124, 77));
+            world.fillRect(0, floor.getY(), 600, 9);
+
+            world.setColor(Color.WHITE);
+            world.drawString(
                     "Floor " + floor.getNumber(),
                     12,
                     floor.getY() - 35);
 
-            floor.getSnake().draw(g);
-            floor.getApple().draw(g);
+            floor.getSnake().draw(world);
+            floor.getApple().draw(world);
         }
 
         for (Ladder ladder : manager.getLadders()) {
-            ladder.draw(g);
+            ladder.draw(world);
         }
 
-        manager.getPlayer().draw(g);
+        manager.getPlayer().draw(world);
 
+        world.dispose();
+
+        // HUD ไม่เลื่อนตามกล้อง
         g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 14));
 
         g.drawString(
                 "HP: " + manager.getPlayer().getHp()
-                        + "     Score: " + manager.getScore(),
-                420,
+                        + "    Score: " + manager.getScore()
+                        + "    Floor: " + manager.getPlayer().getCurrentFloor(),
+                320,
                 22);
+
+        g.setFont(new Font("Arial", Font.PLAIN, 13));
+        g.drawString(
+                "A/D: Move   W/S: Climb   SPACE: Jump   R: Restart",
+                12,
+                525);
 
         if (manager.isGameOver()) {
 
@@ -111,32 +128,23 @@ public class GamePanel extends JPanel {
 
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 42));
-
             g.drawString("GAME OVER", 155, 250);
 
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.PLAIN, 18));
 
-            g.drawString("HP: 0", 270, 290);
-
-            g.setFont(new Font("Arial", Font.PLAIN, 16));
-
             g.drawString(
                     "Score: " + manager.getScore(),
                     255,
-                    320);
+                    290);
 
             g.drawString(
-                    "Press R to Restart",
-                    220,
-                    350);
+                    "Floor: " + manager.getPlayer().getCurrentFloor(),
+                    255,
+                    320);
 
+            g.drawString("Press R to Restart", 220, 350);
         }
-
-        g.drawString(
-                "A/D: Move   W/S: Climb   SPACE: Jump   R: Restart",
-                12,
-                525);
 
         g.dispose();
     }
