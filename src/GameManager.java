@@ -1,4 +1,3 @@
-package com.applehunter;
 import java.util.*;
 public class GameManager {
     private final Player player=new Player(35,450);

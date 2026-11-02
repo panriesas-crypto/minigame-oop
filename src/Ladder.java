@@ -1,4 +1,3 @@
-package com.applehunter;
 import java.awt.*;
 public class Ladder extends GameObject {
     private final int height;

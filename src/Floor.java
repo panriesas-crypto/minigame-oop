@@ -1,4 +1,3 @@
-package com.applehunter;
 public class Floor {
     private final int number, y;
     private final Snake snake;

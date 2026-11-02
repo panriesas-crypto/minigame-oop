@@ -5,6 +5,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
+        <sourceDirectory>src</sourceDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -19,7 +20,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.applehunter.Main</mainClass>
+                    <mainClass>Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,4 +1,3 @@
-package com.applehunter;
 import java.awt.Graphics2D;
 public abstract class GameObject {
     protected int x, y;

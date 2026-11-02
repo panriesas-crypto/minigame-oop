@@ -1,4 +1,3 @@
-package com.applehunter;
 import java.awt.*;
 public class Snake extends GameObject {
     private final int floorNumber;

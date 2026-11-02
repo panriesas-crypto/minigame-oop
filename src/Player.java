@@ -1,4 +1,3 @@
-package com.applehunter;
 import java.awt.*;
 public class Player extends GameObject {
     private int hp = 100;
