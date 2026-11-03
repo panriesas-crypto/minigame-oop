@@ -1,4 +1,10 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.KeyboardFocusManager;
+import java.awt.Rectangle;
+import java.awt.Window;
 
 public class MainMenu {
 
@@ -118,10 +124,7 @@ public class MainMenu {
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 34));
-        drawCentered(g, "APPLE HUNTER", 110);
-
-        g.setFont(new Font("Arial", Font.BOLD, 23));
-        drawCentered(g, "SNAKE TOWER", 145);
+        drawCentered(g, "SNAKES AND LADDERS", 120);
 
         for (int i = 0; i < options.length; i++) {
 
